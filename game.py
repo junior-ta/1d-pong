@@ -42,7 +42,7 @@ left_action2=  False
 right_action1= False
 right_action2= False
 
-racket_sensitivity= 50
+racket_sensitivity= 25
 ball_speed= 125
 
 clock= pygame.time.Clock()
