@@ -42,16 +42,22 @@ right_action1= False
 right_action2= False
 
 racket_sensitivity= 50
+ball_speed= 125
 
 clock= pygame.time.Clock()
 delta_time= 0.1
 
+#speed control
+speedup= 75
 
 #scoreboard
 font= pygame.font.Font(None, size=60)
 left_score=0
 right_score=0
 
+#restart
+restart_font= pygame.font.Font(None, size=30)
+restart_button = pygame.Rect(15, 15, 90, 30) 
 
 
 #.....................Game loop..........................................
@@ -90,6 +96,13 @@ while running:
         screen.blit(right_racket, (750, 300))
 
 
+    #restart button display
+    pygame.draw.rect(screen, (220, 220, 220), restart_button, border_radius=4)
+    pygame.draw.rect(screen, (0, 0, 0), restart_button, 2, border_radius=4)
+
+    text = restart_font.render("Restart", True, (0, 0, 0))
+    text_rect = text.get_rect(center=restart_button.center)
+    screen.blit(text, text_rect)
 
     #....key detection.....
     for event in pygame.event.get():
@@ -97,19 +110,32 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:  
+                if restart_button.collidepoint(event.pos):
+                    right_score= 0
+                    left_score= 0
+                    ball_position= 504
+                    current_ball_direction= random.choice(["right","left"])
+
+
         if event.type == pygame.KEYDOWN:
             if event.key== pygame.K_p:
                 right_action1=True
             if event.key== pygame.K_l:
-                pass
+                right_action2= True
             
             if event.key== pygame.K_q:
                 left_action1= True
             if event.key== pygame.K_a:
-                pass
-        
+                left_action2= True
+
         if event.type == pygame.KEYUP:
-            pass
+            if event.key == pygame.K_a:
+                left_action2 = False
+
+            if event.key == pygame.K_l:
+                right_action2 = False           
     
     
     #.....ball movement.....
@@ -136,8 +162,13 @@ while running:
 
     #move the ball in a direction     
     if current_ball_direction=="right":
-        ball_position+= 75 * delta_time #initial speed is 75px/seconds
+        if left_action2 == True:
+            ball_position += (ball_speed + speedup) * delta_time
+        else:
+            ball_position += ball_speed * delta_time #initial speed is 75px/seconds
         
+            
+
         if ball_position < (tunnel_rightend - racket_sensitivity) and ball_position > (tunnel_leftend + racket_sensitivity):
             if right_action1 == True:
                 yellow_rtimer= 5
@@ -145,7 +176,10 @@ while running:
                 yellow_ltimer= 5
 
     else:
-        ball_position-= 75 * delta_time          
+        if right_action2 == True:
+            ball_position -= (ball_speed + speedup) * delta_time
+        else:
+            ball_position-= ball_speed * delta_time          
         
         if ball_position < (tunnel_rightend - racket_sensitivity) and ball_position > (tunnel_leftend + racket_sensitivity):
             if right_action1 == True:
@@ -162,9 +196,6 @@ while running:
 
     screen.blit(controls_panel, (50,530))
     
-
-    #.....Restart....
-    
     
     pygame.display.flip()
 
@@ -172,33 +203,13 @@ while running:
     delta_time= clock.tick(60)/1000  #gives the time in seconds between each frame with the game capped at 60 frames/second
     delta_time= max(0.001, delta_time) #make sure delta time is never 0
     
+    #resetting variables to default
     left_action1= False
     right_action1= False
+    
 
 pygame.quit
 
 
 #.......................................................................................................#
 #change ball direction change from coordiantes to collision
-#add effect when point lost
-#add effect when point won
-#add effect when racket pressed but there was no collision
-
-#add speed, #if appropriate keydown while ball going to that direction, speed up but to a limit of 150
-
-
-
-# green_racket= left_racket.copy()
-# green_racket.fill((0,255,0), special_flags=pygame.BLEND_RGB_MULT)
-# green_ltimer=3
-# green_rtimer=3
-
-# red_racket= left_racket.copy()
-# red_racket.fill((255,0,0), special_flags=pygame.BLEND_RGB_MULT)
-# red_ltimer=3
-# red_rtimer=3
-
-# yellow_racket= left_racket.copy()
-# yellow_racket.fill((255,255,0), special_flags=pygame.BLEND_RGB_MULT)
-# yellow_ltimer=3
-# yellow_rtimer=3
