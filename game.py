@@ -10,22 +10,22 @@ screen= pygame.display.set_mode((1000, 640))
 background_color = (17, 17, 17)
 
 
-left_player= pygame.image.load('girl.png').convert_alpha()
-right_player= pygame.image.load('dude.png').convert_alpha()
+left_player= pygame.image.load('graphics/girl.png').convert_alpha()
+right_player= pygame.image.load('graphics/dude.png').convert_alpha()
 
-ball= pygame.image.load("ball.png").convert()
+ball= pygame.image.load("graphics/ball.png").convert()
 ball= pygame.transform.scale(ball, (20, 20))
 ball.set_colorkey((17,17,17))
 
-left_racket= pygame.transform.scale((pygame.image.load("racket.png").convert()), (50,40))
+left_racket= pygame.transform.scale((pygame.image.load("graphics/racket.png").convert()), (50,40))
 left_racket.set_colorkey((17,17,17))
-right_racket= pygame.transform.scale((pygame.image.load("racket.png").convert()), (50,40))
+right_racket= pygame.transform.scale((pygame.image.load("graphics/racket.png").convert()), (50,40))
 right_racket.set_colorkey((17,17,17))
 green_ltimer, green_rtimer= 0, 0
 red_ltimer, red_rtimer= 0, 0
 yellow_ltimer, yellow_rtimer= 0, 0
 
-controls_panel= pygame.image.load("controls.png").convert()
+controls_panel= pygame.image.load("graphics/controls.png").convert()
 controls_panel.set_colorkey((33,33,33))
 
 #coordinates
