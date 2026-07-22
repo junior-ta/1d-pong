@@ -11,10 +11,20 @@ background_color = (17, 17, 17)
 
 left_player= pygame.image.load('girl.png').convert_alpha()
 right_player= pygame.image.load('dude.png').convert_alpha()
+
 ball= pygame.image.load("ball.png").convert()
 ball= pygame.transform.scale(ball, (20, 20))
-# ball.set_colorkey((0,0,0))
+ball.set_colorkey((17,17,17))
 
+left_racket= pygame.transform.scale((pygame.image.load("racket.png").convert()), (50,40))
+left_racket.set_colorkey((17,17,17))
+right_racket= pygame.transform.scale((pygame.image.load("racket.png").convert()), (50,40))
+right_racket.set_colorkey((17,17,17))
+
+controls_panel= pygame.image.load("controls.png").convert()
+controls_panel.set_colorkey((33,33,33))
+# controls_panel= pygame.transform.scale(controls_panel, (600,100))
+# print(controls_panel.get_size())
 
 #coordinates
 tunnel_leftend= 225
@@ -42,7 +52,9 @@ while running:
 
     screen.fill(background_color)
     screen.blit(left_player, (150, 266))
+    screen.blit(left_racket, (195, 300))
     screen.blit(right_player, (800, 274))
+    screen.blit(right_racket, (750, 300))
     screen.blit(ball, (ball_position, 306))
 
     #.....ball movement.....
@@ -60,17 +72,25 @@ while running:
 
 
 
-    #.....Scoreboard.....
+    #.....Scoreboard and controls.....
     score= f"{left_score} : {right_score}"
-    score= font.render(score, True, (100,100,100))
+    score= font.render(score, True, (130,130,130))
     screen.blit(score, (450, 50))
+
+    screen.blit(controls_panel, (50,530))
     
+
+    #.....Restart....
+
+
+    #.....end the game....
     for event in pygame.event.get():
         #print(event)
         if event.type == pygame.QUIT:
                     running = False
 
 
+    
     
     pygame.display.flip()
 
