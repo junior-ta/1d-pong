@@ -96,10 +96,10 @@ def reset_game():
 while running:
 
     #Check If the game should run or stop
-    if left_score >= 4:
+    if left_score >= 5:
         winner= "Left Player"
         eog= True
-    elif right_score >= 11:
+    elif right_score >= 5:
         winner= "Right Player"
         eog= True
 
